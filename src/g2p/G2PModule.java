@@ -221,9 +221,6 @@ public class G2PModule {
                     strtmp = strtmp.substring(0,strtmp.length()-1)+ "-i";
                 }
             }
-            
-            
-            
         }
         
         //replace space

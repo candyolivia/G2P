@@ -36,7 +36,7 @@ public class Main {
             String str = sc.nextLine();
             
             str = n.toNormal(str);
-            //System.out.println(str);
+            System.out.println(str);
             System.out.println(gp.findPronounceG2P(str));
             
         } catch (IOException ex) {

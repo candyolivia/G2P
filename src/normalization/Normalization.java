@@ -464,9 +464,9 @@ public class Normalization {
                 }
 
                 if (result.charAt(result.length()-1) == ' ') {
-                    result = result.substring(0,result.length()-1) + currencyRead.get(idx);
+                    result = result.substring(0,result.length()-1) + " " + currencyRead.get(idx);
                 } else {
-                    result = result + currencyRead.get(idx);
+                    result = result+ " " + currencyRead.get(idx);
                 }
                 
             }else if ((splitString[k].length() > 3)&&(splitString[k].substring(0,3).equals("ke-"))) {

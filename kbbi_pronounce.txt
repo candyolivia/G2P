@@ -4161,6 +4161,7 @@ rotamer
 rotifera
 royer
 rudiment@r
+rupee
 sage
 saguer
 sajen

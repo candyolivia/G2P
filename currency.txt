@@ -1,6 +1,5 @@
 Rp. rupiah
 Rp rupiah
-$ dollar
 USD dollar
 AFA afghani
 ALL lek
@@ -144,3 +143,4 @@ YER rial
 ZRZ zaire
 ZMK kwacha
 ZWD dollar
+$ dollar
