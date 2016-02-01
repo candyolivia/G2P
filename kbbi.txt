@@ -2592,7 +2592,6 @@ kuvet
 kwosien
 label
 labelisasi
-labial
 labiodental
 labiovelar
 laden
@@ -2786,7 +2785,6 @@ lewah
 lewar
 lewat
 leyot
-likuida
 linimen
 linoleum
 lipoprotein

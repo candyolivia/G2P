@@ -27,20 +27,24 @@ public class Main {
      */
     public static void main(String[] args) {
         //G2P
-        
+       
         try {
             // TODO code application logic
-            G2PModule gp = new G2PModule();
+           G2PModule gp = new G2PModule();
             Normalization n = new Normalization();
             Scanner sc = new Scanner(System.in);
-            String str = sc.nextLine();
-            
-            str = n.toNormal(str);
+          String str = sc.nextLine();
+          //System.out.println(n.romanToDecimal("XI"));
+           
+          str = n.toNormal(str);
+           
+
             System.out.println(str);
-            System.out.println(gp.findPronounceG2P(str));
+            
+           System.out.println(gp.findPronounceG2P(str));
             
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

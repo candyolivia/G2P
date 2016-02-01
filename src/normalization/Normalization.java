@@ -70,7 +70,7 @@ public class Normalization {
         
         for (int i = 0; i < currency.size(); i++) {
             if(str.startsWith(currency.get(i))) {
-                if((isInteger(str.substring(unit.get(i).length())))||isDecimal(str.substring(unit.get(i).length()))) {
+                if((isInteger(str.substring(currency.get(i).length())))||isDecimal(str.substring(currency.get(i).length()))) {
                     idxcek = i;
                     break;
                 }
@@ -269,7 +269,7 @@ public class Normalization {
         bilangan = Integer.parseInt(s);
 
         terbilang = "";
-
+        
         if (bilangan < 10) 
         {  // (0 - 9)
             terbilang = BilanganAngka[(int)bilangan];
@@ -326,7 +326,8 @@ public class Normalization {
                 terbilang = konversiAngkaVersi2(Integer.toString((int)(bilangan / 1000000))) + " juta " + konversiAngkaVersi2(Integer.toString((int)(bilangan % 1000000)));
             }
         }
-        /*else if (bilangan < 1000000000000) 
+        /*
+        else if (bilangan < 1000000000000) 
         { //(1 milyar - 999 milyar 999 juta 999 ribu 999)
                 if ((bilangan / 1000000000) < 10) 
                 {
@@ -376,7 +377,7 @@ public class Normalization {
                         
                         for (int j = 0; j < splitSpace.length; j++) {
                             if (isAngka(splitSpace[j].charAt(i))) {
-                                normalSentence += konversiAngkaVersi2(splitSpace[j]) + " ";
+                                normalSentence += konversiAngka(splitSpace[j]) + " ";
                             } else {
                                 normalSentence += splitSpace[j] + " ";
                             }
@@ -411,18 +412,30 @@ public class Normalization {
         
         if (str.contains(".")) {
             String[] splitDot = str.split("\\.");
-            for (int i = 0; i < splitDot.length; i++) {
+            if ((splitDot.length == 2)&&(splitDot[0].equals("0"))){
+                result += "nol koma " + konversiAngkaVersi1(splitDot[1]);
+            } else {
+                for (int i = 0; i < splitDot.length; i++) {
                 strtmp += splitDot[i];
+                }
+                result = konversiAngka(strtmp);
             }
-            result = konversiAngkaVersi2(strtmp);
+            
         } else if (str.contains(",")) {
             String[] splitComma = str.split(",");
-            for (int i = 0; i < splitComma.length; i++) {
-                strtmp += splitComma[i];
+            if ((splitComma.length == 2)&&(splitComma[0].equals("0"))){
+                result += "nol koma " + konversiAngkaVersi1(splitComma[1]);
+            } else if (splitComma.length == 2) {
+                result = konversiAngka(splitComma[0]) + " koma " + konversiAngkaVersi1(splitComma[1]);
+                
+            } else {
+                for (int i = 0; i < splitComma.length; i++) {
+                    strtmp += splitComma[i];
+                }
+                result = konversiAngka(strtmp);
             }
-            result = konversiAngkaVersi2(strtmp);
         } else {
-            result = konversiAngkaVersi2(str);
+            result = konversiAngka(str);
         }
         return result;
     }
@@ -432,10 +445,10 @@ public class Normalization {
         if (isDecimal(str)) {
             if (str.contains(".")) {
                 String[] splitString = str.split("\\.");
-                result = konversiAngkaVersi2(splitString[0]) + " koma" + konversiAngkaVersi1(splitString[1]);
+                result = konversiAngka(splitString[0]) + " koma" + konversiAngkaVersi1(splitString[1]);
             } else if (str.contains(",")) {
                 String[] splitString = str.split(",");
-                result = konversiAngkaVersi2(splitString[0]) + " koma" + konversiAngkaVersi1(splitString[1]);
+                result = konversiAngka(splitString[0]) + " koma" + konversiAngkaVersi1(splitString[1]);
             }
             
         }
@@ -450,7 +463,10 @@ public class Normalization {
         
         String[] splitString = str.split(" ");
         for (int k = 0; k < splitString.length; k++) {
-            if (isInteger(splitString[k])) {
+            if (isRoman(splitString[k])) {
+                System.out.println(romanToDecimal(splitString[k]));
+                result = intToNormal(Integer.toString(romanToDecimal(splitString[k])));
+            } else if (isInteger(splitString[k])) {
                 result = intToNormal(splitString[k]);  
             } else if (isDecimal(splitString[k])) {
                 result = decimalToNormal(splitString[k]);
@@ -590,7 +606,7 @@ public class Normalization {
                     result = decimalToNormal(splitGarisMiring[0]);
                 }
 
-                result += " per ";
+                result += " p@r ";
 
                 if (isInteger(splitGarisMiring[1])) {
                     result += intToNormal(splitGarisMiring[1]);
@@ -612,15 +628,15 @@ public class Normalization {
                     if (tmp.equals("")) {
                         //do nothing
                     } else if (isInteger(tmp)) {
-                        result = intToNormal(tmp) + unitRead.get(idx);
+                        result = intToNormal(tmp) + " " + unitRead.get(idx);
                     } else if (isDecimal(tmp)) {
-                        result = decimalToNormal(tmp) + unitRead.get(idx);
+                        result = decimalToNormal(tmp) + " " + unitRead.get(idx);
                     }
                     
                     //System.out.println(result);
                 } 
                 
-                result += " per ";
+                result += " p@r ";
 
                 if (checkUnit(splitGarisMiring[1])!=0) {
                     int idx = checkUnit(splitGarisMiring[1]);
@@ -634,9 +650,9 @@ public class Normalization {
                 if (tmp.equals("")) {
                     //do nothing
                 } else if (isInteger(tmp)) {
-                    result = intToNormal(tmp) + unitRead.get(idx);
+                    result = intToNormal(tmp) + " " + unitRead.get(idx);
                 } else if (isDecimal(tmp)) {
-                    result = decimalToNormal(tmp) + unitRead.get(idx);
+                    result = decimalToNormal(tmp) + " " + unitRead.get(idx);
                 }
             } else {
                 //splitString[k] = splitString[k].replace(".", " titik ");
@@ -670,5 +686,137 @@ public class Normalization {
         
         fixedResult = fixedResult.replace("  ", " ");
         return fixedResult;
+    }
+    
+    //ROMAN CONVERTER
+    public int romanToDecimal(java.lang.String romanNumber) {
+        int decimal = 0;
+        int lastNumber = 0;
+        String romanNumeral = romanNumber.toUpperCase();
+        
+        for (int x = romanNumeral.length() - 1; x >= 0 ; x--) {
+            char convertToDecimal = romanNumeral.charAt(x);
+
+            switch (convertToDecimal) {
+                case 'M':
+                    decimal = processDecimal(1000, lastNumber, decimal);
+                    lastNumber = 1000;
+                    break;
+
+                case 'D':
+                    decimal = processDecimal(500, lastNumber, decimal);
+                    lastNumber = 500;
+                    break;
+
+                case 'C':
+                    decimal = processDecimal(100, lastNumber, decimal);
+                    lastNumber = 100;
+                    break;
+
+                case 'L':
+                    decimal = processDecimal(50, lastNumber, decimal);
+                    lastNumber = 50;
+                    break;
+
+                case 'X':
+                    decimal = processDecimal(10, lastNumber, decimal);
+                    lastNumber = 10;
+                    break;
+
+                case 'V':
+                    decimal = processDecimal(5, lastNumber, decimal);
+                    lastNumber = 5;
+                    break;
+
+                case 'I':
+                    decimal = processDecimal(1, lastNumber, decimal);
+                    lastNumber = 1;
+                    break;
+            }
+        }
+        return decimal;
+    }
+
+    public int processDecimal(int decimal, int lastNumber, int lastDecimal) {
+        if (lastNumber > decimal) {
+            return lastDecimal - decimal;
+        } else {
+            return lastDecimal + decimal;
+        }
+    }
+    
+    public boolean isRoman (String roman) {
+        boolean cek = false;
+        String exception[] = {"MIL","DI","DIL"};
+        String regexRoman = "\\bM{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})\\b";
+        if (roman.matches(regexRoman)) {
+            cek = true;
+	}
+        return cek;
+    }
+    
+    //INTEGER TO STRING CONVERSION
+    public String konversiAngka(String str) {
+        String[] BilanganAngka = {"nol","satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"};
+        String Angka = "123456789";
+        String res = "";
+        int length = str.length();
+        
+        if (length > 15) {
+            res = "Out of bound";
+        } else if (length > 12 && length <= 15) {
+            res = konversiAngkaVersi2(str.substring(0, length-12)) + " triliun ";
+            
+            if (!str.substring(length-12,length-9).equals("000")) {
+                res+=konversiAngkaVersi2(str.substring(length-12,length-9)) + " miliar ";
+            }
+            
+            if (!str.substring(length-9, length-6).equals("000")) {
+                res+=konversiAngkaVersi2(str.substring(length-9, length-6)) + " juta ";
+            }   
+            
+            if (!str.substring(length-6,length-3).equals("000")) {
+                if (str.substring(length-6,length-3).equals("001")) {
+                    res+= "seribu";
+                } else {
+                    res += konversiAngkaVersi2(str.substring(length-6,length-3)) + " ribu "; 
+                }
+            }
+            res += konversiAngkaVersi2(str.substring(length-3,length));
+        } else if (length > 9 && length <= 12) {
+            res = konversiAngkaVersi2(str.substring(0,length-9)) + " miliar ";
+            if (!str.substring(length-9, length-6).equals("000")) {
+                res+=konversiAngkaVersi2(str.substring(length-9, length-6)) + " juta ";
+            }   
+            
+            if (!str.substring(length-6,length-3).equals("000")) {
+                if (str.substring(length-6,length-3).equals("001")) {
+                    res+= "seribu";
+                } else {
+                    res += konversiAngkaVersi2(str.substring(length-6,length-3)) + " ribu "; 
+                }
+            }
+            res += konversiAngkaVersi2(str.substring(length-3,length));
+        } else if (length > 6 && length <= 9) {
+            res = konversiAngkaVersi2(str.substring(0, length-6)) + " juta ";
+            if (!str.substring(length-6,length-3).equals("000")) {
+                if (str.substring(length-6,length-3).equals("001")) {
+                    res+= "seribu";
+                } else {
+                    res += konversiAngkaVersi2(str.substring(length-6,length-3)) + " ribu "; 
+                }
+            }
+            res += konversiAngkaVersi2(str.substring(length-3,length));
+        } else if ((length <=6)&&(!str.equals("0"))&&(!str.equals("00"))&&(!str.equals("000"))){ //length<=3
+            res = konversiAngkaVersi2(str.substring(0,length));
+        } else if (str.equals("0")) {
+            res = "nol";
+        } else if (str.equals("00")) {
+            res = "nol";
+        } else if (str.equals("000")) {
+            res = "nol";
+        }
+        
+        return res;
     }
 }

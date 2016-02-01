@@ -1018,6 +1018,7 @@ CZI
 CF
 CQ
 D
+D-
 DA
 DAG
 DB
@@ -2864,6 +2865,7 @@ R.P.
 R.T.
 R/H
 S
+S-
 SA
 SAA
 SAARC

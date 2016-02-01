@@ -1,4 +1,12 @@
 ton ton
+m meter
+km kilometer
+hm hektometer
+dam dekameter
+dm desimeter
+cm sentimeter
+mm milimeter
+nm nanometer
 kilogram kilogram
 pon pon
 hektogram hektogram
@@ -25,14 +33,6 @@ centimeter sentimeter
 milimeter milimeter
 mikrometer mikrometer
 nanometer nanometer
-m meter
-km kilometer
-hm hektometer
-dam dekameter
-dm desimeter
-cm sentimeter
-mm milimeter
-nm nanometer
 ft fit
 km2 kilometer kuadrat
 km3 kilometer kubik
@@ -57,7 +57,11 @@ daL dekaliter
 dL desiliter
 cL sentiliter
 mL mililiter
+Hz hertz
+GHz gigahertz
+MHz megahertz
 s sekon
+'s sekon
 jam jam
 sekon sekon
 menit menit
