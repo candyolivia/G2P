@@ -34,12 +34,12 @@ milimeter milimeter
 mikrometer mikrometer
 nanometer nanometer
 ft fit
-km2 kilometer kuadrat
-km3 kilometer kubik
-m2 meter kuadrat
-m3 meter kubik
-cm2 sentimeter kuadrat
-cm3 sentimeter kubik
+km2 kilometerkuadrat
+km3 kilometerkubik
+m2 meterkuadrat
+m3 meterkubik
+cm2 sentimeterkuadrat
+cm3 sentimeterkubik
 ha hektar
 mil mil
 are are

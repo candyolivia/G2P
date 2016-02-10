@@ -6,6 +6,8 @@
 
 package g2p;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,18 +32,29 @@ public class Main {
        
         try {
             // TODO code application logic
-           G2PModule gp = new G2PModule();
+            G2PModule gp = new G2PModule();
             Normalization n = new Normalization();
+            //Read file line per line
+            
+            /*
+            BufferedReader br = new BufferedReader(new FileReader("termg2p.txt"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String split[] = line.split(" ");
+                line = n.normalizeSentences(split[1]);
+                System.out.println(split[0] + " " + gp.findPronounceG2P(line));
+                
+            }
+            
+            */
             Scanner sc = new Scanner(System.in);
-          String str = sc.nextLine();
-          //System.out.println(n.romanToDecimal("XI"));
+            String str = sc.nextLine();
+            //System.out.println(n.romanToDecimal("XI"));
            
-          str = n.toNormal(str);
-           
-
+            str = n.normalizeSentences(str);
             System.out.println(str);
             
-           System.out.println(gp.findPronounceG2P(str));
+            System.out.println(gp.findPronounceG2P(str));
             
         } catch (IOException ex) {
            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

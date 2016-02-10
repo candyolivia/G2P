@@ -65,12 +65,40 @@ public class Normalization {
         }
     }
     
+    public boolean checkEndTwoZero (String str) {
+        boolean cek = false;
+        if ((str.endsWith(",00.")) || (str.endsWith(",00"))) {
+            str = (str.replace(",", ""));
+            cek = isInteger(str.replace(".", ""));
+            
+        }
+        
+        return cek;
+    }
+    
+    public String convertEndTwoZero (String str) {
+        String res = "";
+        str = str.substring(0,str.length()-3);
+        if (res.endsWith(",")) {
+            str = str.substring(0,str.length()-1).replace(".", "");
+            str = str.substring(0,str.length()-1).replace(",", "");
+            res = konversiAngka(str);
+            
+        } else {
+            str = str.replace(".", "");
+            str = str.replace(",", "");
+            res = konversiAngka(str);
+        }
+        
+        return res;
+    }
+    
     public int checkCurrency (String str) {
         int idxcek = 0;
         
         for (int i = 0; i < currency.size(); i++) {
             if(str.startsWith(currency.get(i))) {
-                if((isInteger(str.substring(currency.get(i).length())))||isDecimal(str.substring(currency.get(i).length()))) {
+                if((isInteger(str.substring(currency.get(i).length())))||isDecimal(str.substring(currency.get(i).length()))||(checkEndTwoZero(str.substring(currency.get(i).length())))) {
                     idxcek = i;
                     break;
                 }
@@ -84,7 +112,8 @@ public class Normalization {
         int idxcek = 0;
         
         for (int i = 0; i < unit.size(); i++) {
-            if(str.endsWith(unit.get(i))) {
+            if((str.endsWith(unit.get(i)))&&((str.charAt(str.length()-unit.get(i).length())== '/')||isInteger(str.substring(0,str.length()-unit.get(i).length()))
+                    ||(isDecimal(str.substring(0,str.length()-unit.get(i).length()))))) {
                 idxcek = i;
                 
             }
@@ -239,6 +268,32 @@ public class Normalization {
         return cek;
     }
     
+    public boolean checkIP (String str) {
+        boolean cek = false;
+        String strtmp = str.replace(".","");
+        if (isInteger(strtmp)) {
+            cek = true;
+        }
+        return cek;
+    }
+    
+    public String convertIP (String str) {
+        String res = "";
+        String strtmp = str.replace(".","");
+        if (isInteger(strtmp)) {
+            String split[] = str.split("\\.");
+            for (int i = 0; i < split.length; i++) {
+                if (i == split.length-1) {
+                    res += konversiAngka(split[i]);
+                } else {
+                    res += konversiAngka(split[i]) + " titik ";
+                }
+                
+            }
+        }
+        return res;
+    }
+    
     public String konversiAngkaVersi1(String s) {
         String[] BilanganAngka = {"nol ","satu ", "dua ", "tiga ", "empat ", "lima ", "enam ", "tujuh ", "delapan ", "sembilan "};		    
         String terbilang = "";
@@ -326,30 +381,48 @@ public class Normalization {
                 terbilang = konversiAngkaVersi2(Integer.toString((int)(bilangan / 1000000))) + " juta " + konversiAngkaVersi2(Integer.toString((int)(bilangan % 1000000)));
             }
         }
-        /*
-        else if (bilangan < 1000000000000) 
-        { //(1 milyar - 999 milyar 999 juta 999 ribu 999)
-                if ((bilangan / 1000000000) < 10) 
-                {
-                        terbilang = BilanganAngka[(bilangan / 1000000000)] + " milyar " + konversiAngka(Convert.ToString(bilangan % 1000000000));
-                } 
-                else 
-                {
-                        terbilang = konversiAngka(Convert.ToString(bilangan / 1000000000)) + " milyar " + konversiAngka(Convert.ToString(bilangan % 1000000000));
-                }
-        }
-        else if (bilangan < 1000000000000000) 
-        { //(1 trilyun - 999 trilyun 999 milyar 999 juta 999 ribu 999)
-                if ((bilangan / 1000000000000) < 10) 
-                {
-                        terbilang = BilanganAngka[(bilangan / 1000000000000)] + " trilyun " + konversiAngka(Convert.ToString(bilangan % 1000000000000));
-                } 
-                else 
-                {
-                        terbilang = konversiAngka(Convert.ToString(bilangan / 1000000000000)) + " trilyun " + konversiAngka(Convert.ToString(bilangan % 1000000000000));
-                }
-        }*/
         return terbilang;
+    }
+    
+    public boolean checkDate (String str) {
+        boolean cek = false;
+        str = str.replace("(","");
+        str = str.replace(")","");
+        if (countGarisMiring(str) == 2) {
+            String splitstr[] = str.split("/");
+            if (isInteger(splitstr[0])&&isInteger(splitstr[1])&&isInteger(splitstr[2])) {
+                cek = ((Integer.parseInt(splitstr[0])) <= 31)&&(Integer.parseInt(splitstr[0]) > 0)&&
+                    (Integer.parseInt(splitstr[1]) <= 12)&&(Integer.parseInt(splitstr[1]) > 0)&&
+                    (Integer.parseInt(splitstr[2]) <= 5000)&&(Integer.parseInt(splitstr[2]) > 0);
+            }
+            
+        } else if (countTandaHubung(str) == 2) {
+            String splitstr[] = str.split("-");
+            if (isInteger(splitstr[0])&&isInteger(splitstr[1])&&isInteger(splitstr[2])) {
+                cek = ((Integer.parseInt(splitstr[0])) <= 31)&&(Integer.parseInt(splitstr[0]) > 0)&&
+                        (Integer.parseInt(splitstr[1]) <= 12)&&(Integer.parseInt(splitstr[1]) > 0)&&
+                        (Integer.parseInt(splitstr[2]) <= 5000)&&(Integer.parseInt(splitstr[2]) > 0);
+            }
+        }
+        return cek;
+    }
+    
+    public String convertDate(String str) { //Bentuknya dd/mm/yyyy atau d/mm/yyyy atau d/m/yyyy dan yang pakai dalam kurung
+        String res = "";
+        String bulan[] = {"","Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+        str = str.replace("(","");
+        str = str.replace(")","");
+        if (countGarisMiring(str) == 2) {
+            String splitStr[] = str.split("/");
+            res = konversiAngkaVersi2(splitStr[0]) + " " + bulan[Integer.parseInt(splitStr[1])] +
+                    " " + konversiAngkaVersi2(splitStr[2]);
+           
+        } else if (countTandaHubung(str) == 2) {
+            String splitStr[] = str.split("-");
+            res = konversiAngkaVersi2(splitStr[0]) + " " + bulan[Integer.parseInt(splitStr[1])] +
+                    " " + konversiAngkaVersi2(splitStr[2]);
+        }
+        return res;
     }
     
     //Read from file
@@ -443,7 +516,25 @@ public class Normalization {
     public String decimalToNormal(String str) {
         String result = "";
         if (isDecimal(str)) {
-            if (str.contains(".")) {
+            if (str.contains(".")&&str.contains(",")) {
+                if ((countDot(str) == 1)&&(countComma(str) == 1)) {
+                    String splitDot[] = str.split("\\.");
+                    if (splitDot[0].length() < 3) {
+                        String splitComma[] = splitDot[1].split(",");
+                        String tmp = splitDot[0] + splitComma[0];
+                        result = konversiAngka(tmp) + " koma " + konversiAngkaVersi1(splitComma[1]);
+                    } else {
+                        result = konversiAngka(splitDot[0].replace(",","")) + " koma " + konversiAngkaVersi1(splitDot[1]);
+                    }
+                } else if (countDot(str) == 1) {
+                    String splitDot[] = str.split("\\.");
+                    result = konversiAngka(splitDot[0].replace(",","")) + " koma " + konversiAngka(splitDot[1]);
+                    
+                } else if (countComma(str) == 1) {
+                    String splitComma[] = str.split(",");
+                    result = konversiAngka(splitComma[0].replace(".","")) + " koma " + konversiAngka(splitComma[1]);
+                }
+            } else if (str.contains(".")) {
                 String[] splitString = str.split("\\.");
                 result = konversiAngka(splitString[0]) + " koma" + konversiAngkaVersi1(splitString[1]);
             } else if (str.contains(",")) {
@@ -462,6 +553,7 @@ public class Normalization {
         String fixedResult = "";
         
         String[] splitString = str.split(" ");
+        
         for (int k = 0; k < splitString.length; k++) {
             if (isRoman(splitString[k])) {
                 System.out.println(romanToDecimal(splitString[k]));
@@ -470,22 +562,32 @@ public class Normalization {
                 result = intToNormal(splitString[k]);  
             } else if (isDecimal(splitString[k])) {
                 result = decimalToNormal(splitString[k]);
+            } else if (checkDate(splitString[k])) {
+                result = convertDate(splitString[k]);
             } else if (checkCurrency(splitString[k])!=0){
                 int idx = checkCurrency(splitString[k]);
+                splitString[k] = splitString[k].replace("(","");
+                splitString[k] = splitString[k].replace(")","");
                 strtmp = splitString[k].substring(currency.get(idx).length());
-                if (isInteger(strtmp)) {
+                if (strtmp.equals("")) {
+                    result = "";
+                } else if (checkEndTwoZero(strtmp)) {
+                    result = convertEndTwoZero(strtmp);
+                } else if (isInteger(strtmp)) {
                     result = intToNormal(strtmp);
                 } else if (isDecimal(strtmp)) {
                     result = decimalToNormal(strtmp);
-                }
+                } 
 
-                if (result.charAt(result.length()-1) == ' ') {
+                if (result.equals("")) {
+                    result = currencyRead.get(idx);
+                } else if (result.charAt(result.length()-1) == ' ') {
                     result = result.substring(0,result.length()-1) + " " + currencyRead.get(idx);
                 } else {
                     result = result+ " " + currencyRead.get(idx);
                 }
                 
-            }else if ((splitString[k].length() > 3)&&(splitString[k].substring(0,3).equals("ke-"))) {
+            } else if ((splitString[k].length() > 3)&&(splitString[k].substring(0,3).equals("ke-"))) {
                 strtmp = splitString[k].substring(3,splitString[k].length());
 
                 if (isInteger(strtmp)||(isDecimal(strtmp))) {
@@ -614,9 +716,12 @@ public class Normalization {
                     result += decimalToNormal(splitGarisMiring[1]);
                 }
             } else if ((splitString[k].length() > 2) && (countGarisMiring(splitString[k])==1)) {
+                splitString[k] = splitString[k].replace("(","");
+                splitString[k] = splitString[k].replace(")","");
                 String[] splitGarisMiring = splitString[k].split("/");
                 
                 System.out.println(splitGarisMiring[0]);
+                
                 if (isInteger(splitGarisMiring[0])) {
                     result = intToNormal(splitGarisMiring[0]);
                 } else if (isDecimal(splitGarisMiring[0])) {
@@ -625,16 +730,19 @@ public class Normalization {
                     int idx = checkUnit(splitGarisMiring[0]);
                     result = splitGarisMiring[0].replace(unit.get(idx),unitRead.get(idx));
                     String tmp = result.substring(0,result.length()-unitRead.get(idx).length());
-                    if (tmp.equals("")) {
+                    result = toNormal(tmp) + " " + unitRead.get(idx);
+                    /*if (tmp.equals("")) {
                         //do nothing
                     } else if (isInteger(tmp)) {
                         result = intToNormal(tmp) + " " + unitRead.get(idx);
                     } else if (isDecimal(tmp)) {
                         result = decimalToNormal(tmp) + " " + unitRead.get(idx);
-                    }
+                    }*/
                     
                     //System.out.println(result);
-                } 
+                } else {
+                    result = toNormal(splitGarisMiring[0]);
+                }
                 
                 result += " p@r ";
 
@@ -649,20 +757,29 @@ public class Normalization {
                 String tmp = result.substring(0,result.length()-unitRead.get(idx).length());
                 if (tmp.equals("")) {
                     //do nothing
+                    result = toNormal(splitString[k]+".");
                 } else if (isInteger(tmp)) {
                     result = intToNormal(tmp) + " " + unitRead.get(idx);
                 } else if (isDecimal(tmp)) {
                     result = decimalToNormal(tmp) + " " + unitRead.get(idx);
                 }
+            } else if (checkIP(splitString[k])) {
+                result = convertIP(splitString[k]);
             } else {
                 //splitString[k] = splitString[k].replace(".", " titik ");
-                //splitString[k] = splitString[k].replace(",", " koma ");
+                splitString[k] = splitString[k].replace(",", "");
                 splitString[k] = splitString[k].replace("/", " garis miring ");
-                //splitString[k] = splitString[k].replace(":", " titik dua ");
-                //splitString[k] = splitString[k].replace(";", " titik koma ");
-                //splitString[k] = splitString[k].replace("-", " tanda hubung ");
+                splitString[k] = splitString[k].replace(":", "");
+                splitString[k] = splitString[k].replace(";", "");
+                splitString[k] = splitString[k].replace("(", "");
+                splitString[k] = splitString[k].replace(")", "");
                 splitString[k] = splitString[k].replace(".", "");
                 splitString[k] = splitString[k].replace(",", "");
+                splitString[k] = splitString[k].replace("\"","");
+                splitString[k] = splitString[k].replace("\'","");
+                splitString[k] = splitString[k].replace("-","");
+                splitString[k] = splitString[k].replace("  ","");
+                
                 
                 //System.out.println(splitString[k]);
                 String[] splitStr = splitString[k].split(" ");
@@ -817,6 +934,71 @@ public class Normalization {
             res = "nol";
         }
         
+        return res;
+    }
+    
+    public boolean isJam (String str) { //Jam dengan format hh.mm
+        boolean cek = false;
+        if (countDot(str)==1) {
+            String splitString[] = str.split("\\.");
+            if (isInteger(splitString[0])&&isInteger(splitString[1])) {
+                cek = (Integer.parseInt(splitString[0])>= 0 && Integer.parseInt(splitString[0])<=24)&&
+                        (Integer.parseInt(splitString[1])>= 0 && Integer.parseInt(splitString[1])<=59);
+            }
+        }
+        return cek;
+    }
+    public String convertJam (String str) {
+        String res = "";
+        String splitString[] = str.split("\\.");
+        res = konversiAngka(splitString[0]) + " " + konversiAngka(splitString[1]);
+        return res;
+    }
+    
+    public String normalizeSentences(String str) {
+        String res = "";
+        String split[] = str.split(" ");
+        
+        for (int i = 0; i < split.length-1; i++) {
+            if ((split[i].toLowerCase().equals("jam"))||(split[i].toLowerCase().equals("pukul"))) {
+                if (isJam(split[i+1])) {
+                    split[i+1] = convertJam(split[i+1]);
+                }
+            } else if (checkCurrency(split[i])!=0){
+                split[i+1] = split[i+1].replace("(", "");
+                split[i+1] = split[i+1].replace(")", "");
+                if (isInteger(split[i+1])||isDecimal(split[i+1])||checkEndTwoZero(split[i+1])||(countGarisMiring(split[i+1])!=0)) {
+                    
+                    split[i] += split[i+1];
+                    split[i+1] = "";
+                    
+                } else {
+                    split[i] = split[i];
+                    split[i+1] = split[i+1];
+                }
+            } else if (checkUnit(split[i+1])!=0){
+                split[i] = split[i].replace("(", "");
+                split[i] = split[i].replace(")", "");
+                if (isInteger(split[i])||isDecimal(split[i])||checkEndTwoZero(split[i])||(countGarisMiring(split[i])!=0)) {
+                    
+                    split[i] += split[i+1];
+                    split[i+1] = "";
+                    
+                } else {
+                    split[i+1] = split[i+1];
+                    split[i] = split[i];
+                }
+            }
+        }
+        
+        for (int i = 0; i < split.length; i++) {
+            if (!split[i].equals("")) {
+                res += toNormal(split[i]);
+            }
+            
+        }
+        
+        res = res.replace("\"","");
         return res;
     }
 }
