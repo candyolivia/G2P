@@ -882,7 +882,9 @@ public class Normalization {
         if (length > 15) {
             res = "Out of bound";
         } else if (length > 12 && length <= 15) {
-            res = konversiAngkaVersi2(str.substring(0, length-12)) + " triliun ";
+            if (!konversiAngkaVersi2(str.substring(0,length-12)).equals("")) {
+                res = konversiAngkaVersi2(str.substring(0, length-12)) + " triliun ";
+            }
             
             if (!str.substring(length-12,length-9).equals("000")) {
                 res+=konversiAngkaVersi2(str.substring(length-12,length-9)) + " miliar ";
@@ -901,7 +903,9 @@ public class Normalization {
             }
             res += konversiAngkaVersi2(str.substring(length-3,length));
         } else if (length > 9 && length <= 12) {
-            res = konversiAngkaVersi2(str.substring(0,length-9)) + " miliar ";
+            if (!konversiAngkaVersi2(str.substring(0,length-9)).equals("")) {
+                res = konversiAngkaVersi2(str.substring(0,length-9)) + " miliar ";
+            }
             if (!str.substring(length-9, length-6).equals("000")) {
                 res+=konversiAngkaVersi2(str.substring(length-9, length-6)) + " juta ";
             }   
@@ -915,7 +919,9 @@ public class Normalization {
             }
             res += konversiAngkaVersi2(str.substring(length-3,length));
         } else if (length > 6 && length <= 9) {
-            res = konversiAngkaVersi2(str.substring(0, length-6)) + " juta ";
+            if (!konversiAngkaVersi2(str.substring(0,length-6)).equals("")) {
+                res = konversiAngkaVersi2(str.substring(0, length-6)) + " juta ";
+            }
             if (!str.substring(length-6,length-3).equals("000")) {
                 if (str.substring(length-6,length-3).equals("001")) {
                     res+= "seribu";
