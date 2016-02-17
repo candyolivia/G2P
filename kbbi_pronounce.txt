@@ -857,7 +857,7 @@ denotatif
 dentis
 denudasi
 denuklerisasi
-deodoran  Ing
+deodoran
 depak
 depart@men
 depart@mental
@@ -897,7 +897,7 @@ deskriptif
 despot
 despotis
 despotism@
-desta  Bl
+desta
 destilasi
 destinasi
 destroy@r
@@ -931,7 +931,7 @@ dewana
 dewangga
 dewasa
 dewasa
-dewata  kl
+dewata
 dewi
 diabet@s
 diadem
@@ -1337,7 +1337,7 @@ epolet
 epos
 era
 erak
-erang  kl
+erang
 erang
 ercis
 @reh
@@ -1567,9 +1567,9 @@ g@ndewa
 gendong
 genealogi
 geneng
-gen@ralisasi  BId
+gen@ralisasi
 gen@ralis
-gen@rasi  BId
+gen@rasi
 gen@ratif
 gen@rator
 gen@sis
@@ -1907,7 +1907,7 @@ idiolek
 ilegal
 imajiner
 imanen
-imlÃ¨k
+imlek
 imperfeksi
 imp@rialis
 imperalis
@@ -2107,7 +2107,7 @@ karaoke
 karate
 karateka
 karbomet@r
-kareseh-pes@h
+karesehpes@h
 karet
 karier
 karies
@@ -2166,7 +2166,7 @@ kekel
 keki
 kekok
 kelah
-kelang-kelok
+kelangkelok
 k@lebek
 k@ledang
 k@ledar
@@ -2219,7 +2219,7 @@ ken
 kena
 kenceng
 kencong
-kendang ,
+kendang
 k@ndeka
 kendoka
 kendong
@@ -2249,7 +2249,7 @@ k@putren
 kera
 k@raeng
 k@rangkeng
-keang-keroh
+keangkeroh
 keratabasa
 keratin
 keratinas@
@@ -2844,7 +2844,7 @@ magnifier
 magnifiken
 Mahadewa
 Mahadewi
-maharajalela  1
+maharajalela
 maherat
 mahesa
 maheswara
@@ -3117,7 +3117,7 @@ mikrofilamen
 mikrofiotomet@r
 mikrogasomet@r
 mikroint@rferomet@r
-mikrometeorologi  n
+mikrometeorologi
 mikromet@r
 mikronutrien
 mikropluviomet@r
@@ -3472,13 +3472,13 @@ pelor
 pelples
 pelpolisi
 pels
-p@Ivis
+pelvis
 p@meo
-p@mpâ‚¬k
+pempek
 p@n
 pena
 penalti
-p@nc@t
+p@ncet
 p@ncoleng
 pendar
 pendek
@@ -3486,7 +3486,7 @@ p@ndekar
 pendet
 p@ndeta
 penes
-p@n@trasi
+penetrasi
 pang@stu
 pengkar
 pengkol
@@ -3577,7 +3577,7 @@ pesimis
 pesimism@
 p@simistis
 p@sinden
-p@song 1
+p@song
 p@sta
 p@sta pora
 pestisida
@@ -3757,7 +3757,7 @@ prot@in
 prot@ksi
 prot@ksionism@
 prot@ktif
-pr6t@ktorat
+prot@ktorat
 prot@s
 prot@sis
 prot@stan
@@ -4719,7 +4719,7 @@ subversi
 subversif
 suceng
 sudoriferus
-suiseki  Jp
+suiseki
 sujen
 suke
 sukses
@@ -4982,7 +4982,7 @@ toapekong
 toge
 togel
 toilet
-tokcer  cak
+tokcer
 toke
 tokek
 toksemia

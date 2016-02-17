@@ -148,6 +148,8 @@ public class G2PModule {
         String out;
         String strIn = str;
         
+        str = str.replace("@", "");
+        
         if (checkAcronym(str)) {
             str = upperCase(str);
             str = convertAbbreviation(str);
@@ -231,6 +233,15 @@ public class G2PModule {
         
         //replace '''
         strtmp = strtmp.replace("'","");
+        
+        String punct = ":-_\"/+*#$%&='\\!()";
+        int i = 0;
+        
+        while (i < punct.length()){
+            String cc = Character.toString(punct.charAt(i));
+            strtmp = strtmp.replace(cc,"");
+            i++;
+        }
         
         return strtmp;
     }
