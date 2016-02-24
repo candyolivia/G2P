@@ -7,9 +7,17 @@
 package g2p;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,12 +36,14 @@ public class G2PModule {
     private List<String> pronunciation = new ArrayList<>();
     private List<String> kbbi = new ArrayList<>();
     private List<String> kbbiPronounce = new ArrayList<>();
+    private List<String> fullKBBI = new ArrayList<>();
     private List<String> acronym = new ArrayList<>();
+    private EnglishPronounce englishPronounce = new EnglishPronounce();
     
     
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    private String DB_URL = "jdbc:mysql://localhost/inti_dictionary";
+    private String DB_URL = "jdbc:mysql://localhost/kbbi";
 
     //  Database credentials
     static final String USER = "root";
@@ -49,6 +59,7 @@ public class G2PModule {
             }
             fillKBBI();
             fillAcronym();
+            getFullKBBI();
         }
     }
 
@@ -148,6 +159,11 @@ public class G2PModule {
         String out;
         String strIn = str;
         
+        if ((englishPronounce.checkIsEnglish(str))&&!fullKBBI.contains(str)) {
+            out = englishPronounce.getEnglishPronounces().get(englishPronounce.getIndexOfElement(str));
+            return out;
+        }
+        
         str = str.replace("@", "");
         
         if (checkAcronym(str)) {
@@ -234,11 +250,11 @@ public class G2PModule {
         //replace '''
         strtmp = strtmp.replace("'","");
         
-        String punct = ":-_\"/+*#$%&='\\!()";
+        String punct_num = ":-_\"/+*#$%&='\\~`^\'?!()1234567890";
         int i = 0;
         
-        while (i < punct.length()){
-            String cc = Character.toString(punct.charAt(i));
+        while (i < punct_num.length()){
+            String cc = Character.toString(punct_num.charAt(i));
             strtmp = strtmp.replace(cc,"");
             i++;
         }
@@ -347,6 +363,15 @@ public class G2PModule {
             }
         }
         return cek;
+    }
+    
+    public void getFullKBBI() throws IOException {
+        //Read file line per line
+        BufferedReader br = new BufferedReader(new FileReader("FullKBBI.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            fullKBBI.add(line);
+        }
     }
 }
 
