@@ -23,7 +23,7 @@ import sun.management.ThreadInfoCompositeData;
 
 /**
  *
- * @author User
+ * @author Candy Olivia Mawalim
  */
 public class Normalization {
     private String fileName;
@@ -32,6 +32,9 @@ public class Normalization {
     private List<String> unit = new ArrayList<>();
     private List<String> unitRead = new ArrayList<>();
     
+    /**
+     * Constructor
+     */
     public Normalization(){
         try {
             fillCurrency();
@@ -41,6 +44,11 @@ public class Normalization {
         }
     }
     
+    /**
+     * Initialize attribute currency from currency.txt
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void fillCurrency() throws FileNotFoundException, IOException {
         //Read file line per line
         BufferedReader br = new BufferedReader(new FileReader("currency.txt"));
@@ -53,6 +61,11 @@ public class Normalization {
         }
     }
     
+    /**
+     * Initialize attribute unit from unit.txt
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void fillUnit() throws FileNotFoundException, IOException {
         //Read file line per line
         BufferedReader br = new BufferedReader(new FileReader("unit.txt"));
@@ -65,6 +78,11 @@ public class Normalization {
         }
     }
     
+    /**
+     * Check if a string end with two zero
+     * @param str String
+     * @return boolean
+     */
     public boolean checkEndTwoZero (String str) {
         boolean cek = false;
         if ((str.endsWith(",00.")) || (str.endsWith(",00"))) {
@@ -76,6 +94,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Normalize string that end by two zero
+     * @param str String
+     * @return String
+     */
     public String convertEndTwoZero (String str) {
         String res = "";
         str = str.substring(0,str.length()-3);
@@ -93,6 +116,11 @@ public class Normalization {
         return res;
     }
     
+    /**
+     * Check if a string is currency
+     * @param str String
+     * @return integer
+     */
     public int checkCurrency (String str) {
         int idxcek = 0;
         
@@ -108,6 +136,11 @@ public class Normalization {
         return idxcek;
     }
     
+    /**
+     * Check if a string is a unit of measure
+     * @param str String
+     * @return integer
+     */
     public int checkUnit (String str) {
         int idxcek = 0;
         
@@ -122,10 +155,20 @@ public class Normalization {
         return idxcek;
     }
     
+    /**
+     * Check if character cc is numeric
+     * @param cc char
+     * @return boolean
+     */
     public boolean isAngka(char cc) {
         return (((int)cc >=48) && ((int)cc <= 57));
     }
     
+    /**
+     * Check if a string is an integer
+     * @param str String
+     * @return boolean
+     */
     public boolean isInteger(String str) {
         boolean cek = false;
         
@@ -185,6 +228,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Count number of comma punctuation in a string
+     * @param str String
+     * @return integer
+     */
     public int countComma(String str) {
         int count = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -195,6 +243,11 @@ public class Normalization {
         return count;
     }
     
+    /**
+     * Count number of dot punctuation in a string
+     * @param str String
+     * @return integer
+     */
     public int countDot(String str) {
         int count = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -205,6 +258,11 @@ public class Normalization {
         return count;
     }
     
+    /**
+     * Check if a string is a decimal
+     * @param str String
+     * @return boolean
+     */
     public boolean isDecimal(String str) {
         boolean cek = false;
         String strtmp = "";
@@ -220,6 +278,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Count number of Tanda Hubung "-" in a String
+     * @param str String
+     * @return integer
+     */
     public int countTandaHubung (String str) {
         int count = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -230,6 +293,11 @@ public class Normalization {
         return count;
     }
     
+    /**
+     * Check if a string contain tanda sampai
+     * @param str String
+     * @return boolean
+     */
     public boolean isContainTandaSampai(String str) {
         boolean cek = false;
         if (countTandaHubung(str) == 1) {
@@ -245,6 +313,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Count the number of garis miring "/" in a String
+     * @param str String
+     * @return integer
+     */
     public int countGarisMiring (String str) {
         int count = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -255,6 +328,11 @@ public class Normalization {
         return count;
     }
     
+    /**
+     * Check if a string is pecahan
+     * @param str String
+     * @return boolean
+     */
     public boolean isPecahan(String str) {
         boolean cek = false;
         if (countGarisMiring(str) == 1) {
@@ -268,6 +346,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Check a string is an IP Address
+     * @param str String
+     * @return boolean
+     */
     public boolean checkIP (String str) {
         boolean cek = false;
         String strtmp = str.replace(".","");
@@ -277,6 +360,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Normalize IP address string
+     * @param str String
+     * @return String
+     */
     public String convertIP (String str) {
         String res = "";
         String strtmp = str.replace(".","");
@@ -294,6 +382,11 @@ public class Normalization {
         return res;
     }
     
+    /**
+     * Normalize Angka to how it is read per character
+     * @param s String
+     * @return String
+     */
     public String konversiAngkaVersi1(String s) {
         String[] BilanganAngka = {"nol ","satu ", "dua ", "tiga ", "empat ", "lima ", "enam ", "tujuh ", "delapan ", "sembilan "};		    
         String terbilang = "";
@@ -314,7 +407,11 @@ public class Normalization {
         return terbilang;
     }
     
-    
+    /**
+     * Normalize Angka to how it is read
+     * @param s String
+     * @return String
+     */
     public String konversiAngkaVersi2(String s) {
         String[] BilanganAngka = {"","satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"};		    
         String terbilang;
@@ -384,6 +481,11 @@ public class Normalization {
         return terbilang;
     }
     
+    /**
+     * Check if a string is date
+     * @param str String 
+     * @return boolean
+     */
     public boolean checkDate (String str) {
         boolean cek = false;
         str = str.replace("(","");
@@ -407,6 +509,11 @@ public class Normalization {
         return cek;
     }
     
+    /**
+     * Normalize date with dd/mm/yyyy or d/mm/yyyy or d/m/yyyy format 
+     * @param str String
+     * @return String
+     */
     public String convertDate(String str) { //Bentuknya dd/mm/yyyy atau d/mm/yyyy atau d/m/yyyy dan yang pakai dalam kurung
         String res = "";
         String bulan[] = {"","Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
@@ -425,14 +532,18 @@ public class Normalization {
         return res;
     }
     
-    //Read from file
+    /**
+     * Read from file
+     */
     public void readFile() {
         Scanner sc = new Scanner(System.in);
         fileName = sc.nextLine();
         fileName = "out.txt";
     }
     
-    //File to standardized string
+    /**
+     * File to standardized string
+     */
     public void toStandardFile() {
         FileReader fileReader = null;
         try {
@@ -479,6 +590,11 @@ public class Normalization {
         }
     }
     
+    /**
+     * Normalize Integer
+     * @param str String
+     * @return String
+     */
     public String intToNormal(String str) {
         String result = "";
         String strtmp = "";
@@ -513,6 +629,11 @@ public class Normalization {
         return result;
     }
     
+    /**
+     * Normalize decimal
+     * @param str String
+     * @return String
+     */
     public String decimalToNormal(String str) {
         String result = "";
         if (isDecimal(str)) {
@@ -547,6 +668,11 @@ public class Normalization {
         return result;
     }
     
+    /**
+     * Normalize String
+     * @param str String
+     * @return String
+     */
     public String toNormal(String str) {
         String result = "";
         String strtmp = "";
@@ -806,7 +932,13 @@ public class Normalization {
     }
     
     //ROMAN CONVERTER
-    public int romanToDecimal(java.lang.String romanNumber) {
+
+    /**
+     * Convert Roman to Decimal
+     * @param romanNumber String
+     * @return integer
+     */
+    public int romanToDecimal(String romanNumber) {
         int decimal = 0;
         int lastNumber = 0;
         String romanNumeral = romanNumber.toUpperCase();
@@ -854,6 +986,13 @@ public class Normalization {
         return decimal;
     }
 
+    /**
+     * Process decimal
+     * @param decimal integer
+     * @param lastNumber integer
+     * @param lastDecimal integer
+     * @return integer
+     */
     public int processDecimal(int decimal, int lastNumber, int lastDecimal) {
         if (lastNumber > decimal) {
             return lastDecimal - decimal;
@@ -862,6 +1001,11 @@ public class Normalization {
         }
     }
     
+    /**
+     * Check if a string is roman
+     * @param roman String
+     * @return boolean
+     */
     public boolean isRoman (String roman) {
         boolean cek = false;
         String exception[] = {"MIL","DI","DIL"};
@@ -873,6 +1017,12 @@ public class Normalization {
     }
     
     //INTEGER TO STRING CONVERSION
+
+    /**
+     * Convert angka to string
+     * @param str String
+     * @return String
+     */
     public String konversiAngka(String str) {
         String[] BilanganAngka = {"nol","satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"};
         String Angka = "123456789";
@@ -943,6 +1093,11 @@ public class Normalization {
         return res;
     }
     
+    /**
+     * Check if string is time with hh.mm format
+     * @param str String
+     * @return boolean
+     */
     public boolean isJam (String str) { //Jam dengan format hh.mm
         boolean cek = false;
         if (countDot(str)==1) {
@@ -954,6 +1109,12 @@ public class Normalization {
         }
         return cek;
     }
+
+    /**
+     * Convert Time to String
+     * @param str String
+     * @return String
+     */
     public String convertJam (String str) {
         String res = "";
         String splitString[] = str.split("\\.");
@@ -961,6 +1122,11 @@ public class Normalization {
         return res;
     }
     
+    /**
+     * Normalize Sentence
+     * @param str String
+     * @return String
+     */
     public String normalizeSentences(String str) {
         String res = "";
         String split[] = str.split(" ");

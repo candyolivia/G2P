@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * 
  * @author Candy Olivia Mawalim
  */
 public class EnglishPronounce {
@@ -24,6 +24,10 @@ public class EnglishPronounce {
     private List<String> englishPronounces = new ArrayList<>();
     
     //Constructor
+
+    /**
+     * Constructor
+     */
     public EnglishPronounce() {
         try {
             initialize();
@@ -33,24 +37,46 @@ public class EnglishPronounce {
     }
 
     //GETTER AND SETTER
+
+    /**
+     * getter of attribute englishWords
+     * @return List of String
+     */
     public List<String> getEnglishWords() {
         return englishWords;
     }
 
+    /**
+     * setter for attribute englishWords
+     * @param englishWords List of String
+     */
     public void setEnglishWords(List<String> englishWords) {
         this.englishWords = englishWords;
     }
 
+    /**
+     * getter of attribute englishPronounces
+     * @return List of String
+     */
     public List<String> getEnglishPronounces() {
         return englishPronounces;
     }
 
+    /**
+     * setter for attribute englishPronounces
+     * @param englishPronounces List of String
+     */
     public void setEnglishPronounces(List<String> englishPronounces) {
         this.englishPronounces = englishPronounces;
     }
     
     //FUNCTIONS AND PROCEDURES
-    //Check if a string is written in English
+    
+    /**
+     * Check if a string is written in English
+     * @param str String
+     * @return boolean
+     */
     public boolean checkIsEnglish(String str) {
         boolean check = false;
         if (englishWords.contains(str)) {
@@ -59,7 +85,12 @@ public class EnglishPronounce {
         return check;
     }
     
-    //Get the index of a string in englishWords
+
+    /**
+     * Get the index of a string in englishWords
+     * @param str String
+     * @return integer
+     */
     public int getIndexOfElement (String str) {
         int res = 0;
         for (int i = 0; i < englishWords.size(); i++) {
@@ -71,7 +102,11 @@ public class EnglishPronounce {
         return res;
     }
     
-    //Initialize list that contain english words and pronounce from cmu-dictionary
+    /**
+     * Initialize list that contain english words and pronounce from cmu-dictionary
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void initialize() throws FileNotFoundException, IOException {
         //Read file line per line
         String line;
@@ -84,7 +119,10 @@ public class EnglishPronounce {
         }
     }
     
-    //Convert English Word to G2P based on CMU-dictionary
+    /**
+     * Convert English Word to G2P based on CMU-dictionary
+     * @return String
+     */
     public String convertEnglishToG2P () {
         String str = "";
         return str;

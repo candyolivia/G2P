@@ -21,7 +21,7 @@ import normalization.Normalization;
 
 /**
  *
- * @author User
+ * @author Candy Olivia Mawalim
  */
 public class Main {
     /**
