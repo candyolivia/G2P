@@ -7,17 +7,9 @@
 package g2p;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -147,10 +139,10 @@ public class G2PModule {
         return cek;
     }
     
+    //Check if a character is Consonant
     public boolean isConsonant(char c) {
-        boolean cek = false;
+        boolean cek;
         cek = !((c=='a')||(c=='e')||(c=='i')||(c=='o')||(c=='u'));
-                
         return cek;
     }
     
@@ -365,6 +357,7 @@ public class G2PModule {
         return cek;
     }
     
+    //Get all of Vocabularies from KBBI Dictionary
     public void getFullKBBI() throws IOException {
         //Read file line per line
         BufferedReader br = new BufferedReader(new FileReader("FullKBBI.txt"));

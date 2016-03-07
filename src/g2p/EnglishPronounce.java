@@ -19,9 +19,11 @@ import java.util.logging.Logger;
  * @author Candy Olivia Mawalim
  */
 public class EnglishPronounce {
+    //Attributes
     private List<String> englishWords = new ArrayList<>();
     private List<String> englishPronounces = new ArrayList<>();
     
+    //Constructor
     public EnglishPronounce() {
         try {
             initialize();
@@ -30,6 +32,7 @@ public class EnglishPronounce {
         }
     }
 
+    //GETTER AND SETTER
     public List<String> getEnglishWords() {
         return englishWords;
     }
@@ -46,6 +49,8 @@ public class EnglishPronounce {
         this.englishPronounces = englishPronounces;
     }
     
+    //FUNCTIONS AND PROCEDURES
+    //Check if a string is written in English
     public boolean checkIsEnglish(String str) {
         boolean check = false;
         if (englishWords.contains(str)) {
@@ -54,6 +59,7 @@ public class EnglishPronounce {
         return check;
     }
     
+    //Get the index of a string in englishWords
     public int getIndexOfElement (String str) {
         int res = 0;
         for (int i = 0; i < englishWords.size(); i++) {
@@ -65,10 +71,10 @@ public class EnglishPronounce {
         return res;
     }
     
+    //Initialize list that contain english words and pronounce from cmu-dictionary
     public void initialize() throws FileNotFoundException, IOException {
         //Read file line per line
         String line;
-        
         BufferedReader br = new BufferedReader(new FileReader("cmudict_indo.txt"));
         
         while ((line = br.readLine()) != null) {
@@ -76,20 +82,12 @@ public class EnglishPronounce {
             englishWords.add(splitLine[0].toLowerCase());
             englishPronounces.add(splitLine[1].toLowerCase());
         }
-        
-        //System.out.println(englishWords);
-        //System.out.println(englishPronounces);
     }
     
+    //Convert English Word to G2P based on CMU-dictionary
     public String convertEnglishToG2P () {
         String str = "";
         return str;
     }
     
-   
-    
-    public static void main (String[] args) {
-        EnglishPronounce ep = new EnglishPronounce();
-        
-    }
 }

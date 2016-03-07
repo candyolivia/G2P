@@ -35,18 +35,6 @@ public class Main {
             G2PModule gp = new G2PModule();
             Normalization n = new Normalization();
             //Read file line per line
-            
-            /*
-            BufferedReader br = new BufferedReader(new FileReader("termg2p.txt"));
-            String line;
-            while ((line = br.readLine()) != null) {
-                String split[] = line.split(" ");
-                line = n.normalizeSentences(split[1]);
-                System.out.println(split[0] + " " + gp.findPronounceG2P(line));
-                
-            }
-            
-            */
             Scanner sc = new Scanner(System.in);
             String str = sc.nextLine();
            
